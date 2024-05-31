@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @EnableMethodSecurity
 @RequestMapping("/student")
@@ -17,15 +19,17 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/create")
     public String createStudent(@RequestBody Student student){
+        studentService.createStudent(student);
         return "student successfully created with roll : "+student.getRoll();
     }
 
-    //@PreAuthorize("hasAuthority('ROLE_STUDENT')")
-    @GetMapping("/all")
-    public String getStudents(){
-        return "its secured...";
+    @PreAuthorize("hasAuthority('TEACHER')")
+    @GetMapping("/list")
+    public List<Student> getStudents(){
+        return studentService.getAllStudents();
     }
     @GetMapping("/notAll")
     public String getStudent(){

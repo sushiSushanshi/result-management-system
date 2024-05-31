@@ -20,9 +20,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilter(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+                .httpBasic()
+                .and()
                 .csrf(c -> c.disable())
-                .authorizeHttpRequests(a -> a.requestMatchers("/student/create","/teacher/create").permitAll())
-                .authorizeHttpRequests(a -> a. requestMatchers("/student/all").authenticated())
+                .authorizeHttpRequests(a -> a. requestMatchers("/*").authenticated())
                 .formLogin()
                 .and()
                 .authorizeHttpRequests(a -> a.anyRequest().permitAll())

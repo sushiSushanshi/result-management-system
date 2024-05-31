@@ -6,6 +6,8 @@ import com.resultmanagementsystem.util.CustomPassworEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherService {
 
@@ -16,5 +18,8 @@ public class TeacherService {
         teacher.setPassword(CustomPassworEncoder.passwordEncoder().encode(teacher.getPassword()));
         teacherRepository.save(teacher);
         return teacher;
+    }
+    public List<Teacher> getAllTeachers(){
+        return teacherRepository.findAll();
     }
 }

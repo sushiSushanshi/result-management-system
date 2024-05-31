@@ -19,16 +19,15 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     public String createtracher(@RequestBody Teacher teacher){
         teacherService.createTeacher(teacher);
         return "successfully created tescher with id : "+teacher.getId();
     }
 
-    //@PreAuthorize("hasAuthority('ROLE_TEACHER')")
+    @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/list")
-    public List<String> getAllTeachers(){
-        List<String> teachers = Arrays.asList("Mrs Rita","Mr jatin walia", "Mr Rahul Anand");
-        return teachers;
+    public List<Teacher> getAllTeachers(){
+        return teacherService.getAllTeachers();
     }
 }

@@ -14,4 +14,5 @@ public class Student {
     private String std;
     private String phone;
     private String address;
+    private String[] roles;
 }
