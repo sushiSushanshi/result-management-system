@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Subject {
+public class   Subject {
     @Id
     private String subjectId;
     @Enumerated(EnumType.STRING)

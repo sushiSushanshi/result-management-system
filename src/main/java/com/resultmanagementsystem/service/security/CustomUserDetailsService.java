@@ -1,4 +1,4 @@
-package com.resultmanagementsystem.service;
+package com.resultmanagementsystem.service.security;
 
 import com.resultmanagementsystem.config.CustomUserDetails;
 import com.resultmanagementsystem.entity.Teacher;
