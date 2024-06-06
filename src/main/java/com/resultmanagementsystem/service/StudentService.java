@@ -23,4 +23,9 @@ public class StudentService {
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
+
+    public Student getStudent(String studentId){
+        return studentRepository.findById(studentId).get();
+    }
+
 }

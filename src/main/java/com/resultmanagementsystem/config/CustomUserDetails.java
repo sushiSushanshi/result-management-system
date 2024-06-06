@@ -26,19 +26,16 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(roles);
         return roles;
     }
 
     @Override
     public String getPassword() {
-        System.out.println(password);
         return password;
     }
 
     @Override
     public String getUsername() {
-        System.out.println(id);
         return id;
     }
 

@@ -2,6 +2,7 @@ package com.resultmanagementsystem.controller;
 
 import com.resultmanagementsystem.entity.Student;
 import com.resultmanagementsystem.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,8 +21,8 @@ public class StudentController {
     private StudentService studentService;
 
     @PreAuthorize("hasAuthority('TEACHER')")
-    @PostMapping("/create")
-    public String createStudent(@RequestBody Student student){
+    @PostMapping("/register")
+    public String createStudent( @RequestBody Student student){
         studentService.createStudent(student);
         return "student successfully created with roll : "+student.getRoll();
     }
@@ -31,8 +32,11 @@ public class StudentController {
     public List<Student> getStudents(){
         return studentService.getAllStudents();
     }
-    @GetMapping("/notAll")
-    public String getStudent(){
-        return "its not secured...";
+
+    @PreAuthorize("hasAuthority('TEACHER')")
+    @GetMapping("/{studentId}")
+    public Student getStudent(@PathVariable String studentId){
+        return studentService.getStudent(studentId);
     }
+
 }
