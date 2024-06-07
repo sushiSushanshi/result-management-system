@@ -1,9 +1,9 @@
 package com.resultmanagementsystem.entity;
 
+import com.resultmanagementsystem.dto.Subject;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
 
@@ -24,7 +24,6 @@ public class Student {
     private String address;
     @NotNull
     private String[] roles;
-    @OneToMany(targetEntity = Subject.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_roll", referencedColumnName = "roll")
+    @ElementCollection
     private List<Subject> subjects;
 }

@@ -1,16 +1,14 @@
-package com.resultmanagementsystem.entity;
+package com.resultmanagementsystem.dto;
 
+import com.resultmanagementsystem.entity.Subjects;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity
+@Embeddable
 public class   Subject {
-    @Id
     private String subjectId;
     @Enumerated(EnumType.STRING)
     private Subjects name;
-    @Column(name = "student_roll")
-    private String studentRoll;
     private int marks;
 }

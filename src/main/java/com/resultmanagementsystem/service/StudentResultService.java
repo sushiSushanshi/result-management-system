@@ -2,7 +2,7 @@ package com.resultmanagementsystem.service;
 
 import com.resultmanagementsystem.dto.Result;
 import com.resultmanagementsystem.entity.Student;
-import com.resultmanagementsystem.entity.Subject;
+import com.resultmanagementsystem.dto.Subject;
 import com.resultmanagementsystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
