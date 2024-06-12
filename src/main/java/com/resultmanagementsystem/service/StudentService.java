@@ -1,8 +1,9 @@
 package com.resultmanagementsystem.service;
 
 import com.resultmanagementsystem.entity.Student;
-import com.resultmanagementsystem.dto.Subject;
+import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.repository.StudentRepository;
+import com.resultmanagementsystem.repository.SubjectRepository;
 import com.resultmanagementsystem.util.CustomPassworEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,16 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
     public Student createStudent(Student student){
+        List<Subject> subjectList = student.getSubjects();
+        for(Subject subject : subjectList){
+            subject.setSubjectId(subject.getSubjectId());
+            subjectRepository.save(subject);
+        }
+        student.setSubjects(subjectList);
         student.setPassword(CustomPassworEncoder.passwordEncoder().encode(student.getPassword()));
         studentRepository.save(student);
         return student ;
@@ -33,9 +42,12 @@ public class StudentService {
         Student student = studentRepository.findById(studentId).get();
         List<Subject> subjectList = student.getSubjects();
         for(Subject subject : subjects){
+            subject.setSubjectId(subject.getSubjectId());
+            subjectRepository.save(subject);
             subjectList.add(subject);
         }
         student.setSubjects(subjectList);
+        studentRepository.save(student);
         return subjects;
     }
 }

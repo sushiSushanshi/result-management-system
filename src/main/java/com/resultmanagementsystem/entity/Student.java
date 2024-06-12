@@ -1,13 +1,15 @@
 package com.resultmanagementsystem.entity;
 
-import com.resultmanagementsystem.dto.Subject;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Student {
     @Id
@@ -24,6 +26,10 @@ public class Student {
     private String address;
     @NotNull
     private String[] roles;
-    @ElementCollection
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "student_subjects",
+            joinColumns = { @JoinColumn(name = "student_id", referencedColumnName = "roll") },
+            inverseJoinColumns = { @JoinColumn(name = "subjects", referencedColumnName = "subjectId")})
     private List<Subject> subjects;
 }

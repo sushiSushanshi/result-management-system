@@ -2,7 +2,7 @@ package com.resultmanagementsystem.service;
 
 import com.resultmanagementsystem.dto.Result;
 import com.resultmanagementsystem.entity.Student;
-import com.resultmanagementsystem.dto.Subject;
+import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class StudentResultService {
         List<Subject> subjectMarks = student.getSubjects();
         Map<String, Integer> studentMarks = new HashMap<>();
         for(Subject subject : subjectMarks){
-            studentMarks.put(subject.getName().toString(),subject.getMarks());
+            studentMarks.put(subject.getSubjectName().toString(),subject.getMarks());
         }
         result.setSubjectMarks(studentMarks);
         return result;

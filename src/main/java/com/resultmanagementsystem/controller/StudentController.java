@@ -1,15 +1,11 @@
 package com.resultmanagementsystem.controller;
 
-import com.resultmanagementsystem.dto.Subject;
 import com.resultmanagementsystem.entity.Student;
-import com.resultmanagementsystem.entity.Subjects;
+import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.service.StudentService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -41,13 +37,13 @@ public class StudentController {
     public Student getStudent(@PathVariable String studentId){
         return studentService.getStudent(studentId);
     }
-
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/addSubject/{studentId}")
     public String addSubjectToStudent(@PathVariable String studentId ,@RequestBody List<Subject> subjects){
         studentService.addSubjectToStudent(studentId,subjects);
         List<String> subjectsList = new ArrayList<>();
         for(Subject subject : subjects){
-            subjectsList.add(subject.getName().toString());
+            subjectsList.add(subject.getSubjectName().toString());
         }
         return String.join(",",subjectsList)+" added to roll "+studentId;
     }
