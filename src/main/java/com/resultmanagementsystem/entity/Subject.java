@@ -1,5 +1,6 @@
 package com.resultmanagementsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,5 +24,6 @@ public class Subject {
     private int marks;
 
     @ManyToMany(mappedBy = "subjects")
+    @JsonBackReference
     private List<Student> students;
 }
