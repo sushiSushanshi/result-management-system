@@ -25,7 +25,6 @@ public class StudentService {
             subjectRepository.save(subject);
         }
         student.setSubjects(subjectList);
-        student.setPassword(CustomPassworEncoder.passwordEncoder().encode(student.getPassword()));
         studentRepository.save(student);
         return student ;
     }

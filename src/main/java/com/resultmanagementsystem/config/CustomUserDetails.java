@@ -1,5 +1,6 @@
 package com.resultmanagementsystem.config;
 
+import com.resultmanagementsystem.entity.CustomUser;
 import com.resultmanagementsystem.entity.Teacher;
 import com.resultmanagementsystem.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private List<GrantedAuthority> roles;
 
-    public CustomUserDetails(Teacher teacher){
-        this.id=teacher.getId();
-        this.password= teacher.getPassword();
-        this.roles= Arrays.stream(teacher.getRoles()).map(SimpleGrantedAuthority::new).collect(Collectors.toUnmodifiableList());
+    public CustomUserDetails(CustomUser user){
+        this.id=user.getUserId();
+        this.password= user.getPassword();
+        this.roles= Arrays.stream(user.getRoles()).map(SimpleGrantedAuthority::new).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

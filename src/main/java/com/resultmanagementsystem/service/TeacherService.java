@@ -15,7 +15,6 @@ public class TeacherService {
     private TeacherRepository teacherRepository;
 
     public Teacher createTeacher(Teacher teacher){
-        teacher.setPassword(CustomPassworEncoder.passwordEncoder().encode(teacher.getPassword()));
         teacherRepository.save(teacher);
         return teacher;
     }

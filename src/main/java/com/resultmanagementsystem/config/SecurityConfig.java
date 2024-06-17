@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf(c -> c.disable())
+                .authorizeHttpRequests(a -> a.requestMatchers("/user/register").permitAll())
                 .authorizeHttpRequests(a -> a. requestMatchers("/*").authenticated())
                 .formLogin()
                 .and()
@@ -27,15 +28,6 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userRolesManagement(){
-//        UserDetails teacher = User.withUsername("sushanshi")
-//                .password(passwordEncoder().encode("123"))
-//                .roles("TEACHER")
-//                .build();
-//        UserDetails student = User.withUsername("Ram")
-//                .password(passwordEncoder().encode("Ram"))
-//                .roles("STUDENT")
-//                .build();
-
         return new CustomUserDetailsService();
     }
 

@@ -9,7 +9,6 @@ import lombok.Data;
 public class Teacher {
     @Id
     private String id;
-    private String password;
     private String name;
     private String phone;
     private String address;
