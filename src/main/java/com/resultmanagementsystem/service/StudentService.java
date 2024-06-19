@@ -19,14 +19,7 @@ public class StudentService {
     private SubjectRepository subjectRepository;
 
     public Student createStudent(Student student){
-        List<Subject> subjectList = student.getSubjects();
-        for(Subject subject : subjectList){
-            subject.setSubjectId(subject.getSubjectId());
-            subjectRepository.save(subject);
-        }
-        student.setSubjects(subjectList);
-        studentRepository.save(student);
-        return student ;
+        return studentRepository.save(student) ;
     }
 
     public List<Student> getAllStudents(){
@@ -41,7 +34,7 @@ public class StudentService {
         Student student = studentRepository.findById(studentId).get();
         List<Subject> subjectList = student.getSubjects();
         for(Subject subject : subjects){
-            subject.setSubjectId(subject.getSubjectId());
+            subject.setId(subject.getId());
             subjectRepository.save(subject);
             subjectList.add(subject);
         }

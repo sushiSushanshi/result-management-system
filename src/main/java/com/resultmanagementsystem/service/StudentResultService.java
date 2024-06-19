@@ -24,9 +24,6 @@ public class StudentResultService {
         result.setRollNum(student.getRoll());
         List<Subject> subjectMarks = student.getSubjects();
         Map<String, Integer> studentMarks = new HashMap<>();
-        for(Subject subject : subjectMarks){
-            studentMarks.put(subject.getSubjectName().toString(),subject.getMarks());
-        }
         result.setSubjectMarks(studentMarks);
         return result;
     }
