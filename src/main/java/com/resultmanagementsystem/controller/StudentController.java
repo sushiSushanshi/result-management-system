@@ -1,8 +1,10 @@
 package com.resultmanagementsystem.controller;
 
+import com.resultmanagementsystem.dto.StudentDTO;
 import com.resultmanagementsystem.entity.Student;
 import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.service.StudentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,6 +21,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/register")
     public String createStudent( @RequestBody Student student){
@@ -28,13 +33,20 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/list")
-    public List<Student> getStudents(){
-        return studentService.getAllStudents();
+    public List<StudentDTO> getStudents(){
+        List<Student> students = studentService.getAllStudents();
+        List<StudentDTO> studentDTOList = new ArrayList<>();
+        for (Student student : students){
+            StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
+            studentDTOList.add(studentDTO);
+        }
+        return studentDTOList;
     }
 
     @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/{studentId}")
     public Student getStudent(@PathVariable String studentId){
+
         return studentService.getStudent(studentId);
     }
     @PreAuthorize("hasAuthority('TEACHER')")

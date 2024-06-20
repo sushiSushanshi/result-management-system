@@ -21,7 +21,7 @@ public class MarksService {
         return marksRepository.findAll();
     }
 
-//    public List<Marks> findByStudent(String roll){
-//        return marksRepository.findByStudentId(roll);
-//    }
+    public List<Marks> findByStudent(String roll){
+        return marksRepository.findByStudentId(roll);
+    }
 }
