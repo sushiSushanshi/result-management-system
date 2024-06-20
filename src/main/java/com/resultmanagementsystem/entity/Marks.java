@@ -13,13 +13,14 @@ import lombok.Setter;
 @Entity
 public class Marks {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student Student;
-    @OneToOne
+    private Student student;
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    private Subject Subject;
+    private Subject subject;
     private int obtainedTheoryMarks;
     private int obtainedPracticalMarks;
     private int totalMarks;
