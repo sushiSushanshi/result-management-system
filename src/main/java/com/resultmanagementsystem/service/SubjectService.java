@@ -20,4 +20,11 @@ public class SubjectService {
     public List<Subject> getAllSubject(){
         return subjectRepository.findAll();
     }
+    public Subject findBySubjectName(String subjectName){
+        return subjectRepository.findBySubjectName(subjectName);
+    }
+
+    public Subject findSubjectById(String id){
+        return subjectRepository.findById(id).get();
+    }
 }
