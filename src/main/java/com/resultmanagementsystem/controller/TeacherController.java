@@ -25,21 +25,14 @@ public class TeacherController {
     private ModelMapper modelMapper;
 
     @PostMapping("/register")
-    public String createtracher(@RequestBody Teacher teacher){
-        Teacher teacher1 = teacherService.createTeacher(teacher);
-        TeacherDTO teacherDTO = modelMapper.map(teacher1, TeacherDTO.class);
+    public String createTeacher(@RequestBody TeacherDTO teacherDTO){
+        TeacherDTO teacherDTO1 = teacherService.createTeacher(teacherDTO);
         return "successfully created tescher with id : "+teacherDTO.getId();
     }
 
     @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/list")
     public List<TeacherDTO> getAllTeachers(){
-        List<Teacher> teachers = teacherService.getAllTeachers();
-        List<TeacherDTO> teacherDTOList = new ArrayList<>();
-        for (Teacher teacher : teachers){
-            TeacherDTO teacherDTO = modelMapper.map(teacher, TeacherDTO.class);
-            teacherDTOList.add(teacherDTO);
-        }
-        return teacherDTOList;
+        return teacherService.getAllTeachers();
     }
 }
