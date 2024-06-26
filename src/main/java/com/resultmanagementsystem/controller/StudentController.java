@@ -31,48 +31,25 @@ public class StudentController {
     @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/register")
     public String createStudent( @RequestBody StudentDTO studentDTO){
-        List<Subject> subjectList = studentDTO.getSubjects().stream().map(s -> {
-            String subjectId = subjectService.findBySubjectName(s).getId();
-            return subjectService.findSubjectById(subjectId);
-        }).collect(Collectors.toList());
-        Student student = modelMapper.map(studentDTO, Student.class);
-        student.setSubjects(subjectList);
-        studentService.createStudent(student);
+        studentService.createStudent(studentDTO);
         return "student successfully created with roll : "+studentDTO.getRoll();
     }
 
     @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/list")
     public List<StudentDTO> getStudents(){
-        List<Student> students = studentService.getAllStudents();
-        List<StudentDTO> studentDTOList = new ArrayList<>();
-        for (Student student : students){
-            List<String> subjectNames = student.getSubjects().stream().map(Subject::getSubjectName).collect(Collectors.toList());
-            StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
-            studentDTO.setSubjects(subjectNames);
-            studentDTOList.add(studentDTO);
-        }
-        return studentDTOList;
+        return studentService.getAllStudents();
     }
 
     @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping("/{studentId}")
     public StudentDTO getStudent(@PathVariable String studentId){
-        Student student= studentService.getStudent(studentId);
-        List<String> studentsubjects = student.getSubjects().stream().map(s -> s.getSubjectName()).collect(Collectors.toList());
-        StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
-        studentDTO.setSubjects(studentsubjects);
-        return studentDTO;
+        return studentService.getStudent(studentId);
     }
     @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/addSubject/{studentId}")
-    public String addSubjectToStudent(@PathVariable String studentId ,@RequestBody List<Subject> subjects){
-        studentService.addSubjectToStudent(studentId,subjects);
-        List<String> subjectsList = new ArrayList<>();
-        for(Subject subject : subjects){
-            subjectsList.add(subject.getSubjectName().toString());
-        }
-        return String.join(",",subjectsList)+" added to roll "+studentId;
+    public List<String> addSubjectToStudent(@PathVariable String studentId ,@RequestBody List<String> subjects){
+        return studentService.addSubjectToStudent(studentId, subjects);
     }
 
 }
