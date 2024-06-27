@@ -1,10 +1,13 @@
 package com.resultmanagementsystem.service;
 
+import com.resultmanagementsystem.dto.SubjectDTO;
 import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.repository.SubjectRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,19 +15,31 @@ public class SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public Subject addSubject(Subject subject){
-        return subjectRepository.save(subject);
+    public SubjectDTO registerSubject(SubjectDTO subjectDTO){
+        Subject subject = modelMapper.map(subjectDTO, Subject.class);
+        Subject response = subjectRepository.save(subject);
+        return modelMapper.map(response , SubjectDTO.class );
     }
 
-    public List<Subject> getAllSubject(){
-        return subjectRepository.findAll();
+    public List<SubjectDTO> getAllSubject(){
+        List<Subject> subjects = subjectRepository.findAll();
+        List<SubjectDTO> subjectDTOS = new ArrayList<>();
+        for(Subject subject : subjects){
+            SubjectDTO subjectDTO = modelMapper.map(subject, SubjectDTO.class);
+            subjectDTOS.add(subjectDTO);
+        }
+        return subjectDTOS;
     }
-    public Subject findBySubjectName(String subjectName){
-        return subjectRepository.findBySubjectName(subjectName);
+    public SubjectDTO findBySubjectName(String subjectName){
+        Subject subject = subjectRepository.findBySubjectName(subjectName);
+        return modelMapper.map(subject, SubjectDTO.class);
     }
 
-    public Subject findSubjectById(String id){
-        return subjectRepository.findById(id).get();
+    public SubjectDTO findSubjectById(String id){
+        Subject subject = subjectRepository.findById(id).get();
+        return modelMapper.map(subject, SubjectDTO.class);
     }
 }

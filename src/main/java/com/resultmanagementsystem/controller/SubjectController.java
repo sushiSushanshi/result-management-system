@@ -1,5 +1,6 @@
 package com.resultmanagementsystem.controller;
 
+import com.resultmanagementsystem.dto.SubjectDTO;
 import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,21 @@ public class SubjectController {
 
 
     @PostMapping("/register")
-    public String addSubject(@RequestBody Subject subject){
-        Subject subject1 = subjectService.addSubject(subject);
-        return subject1.getSubjectName()+" added successfully";
+    public SubjectDTO registerSubject(@RequestBody SubjectDTO subjectDTO){
+        return subjectService.registerSubject(subjectDTO);
     }
 
     @GetMapping("/all")
-    public List<Subject> getAllSubjects(){
+    public List<SubjectDTO> getAllSubjects(){
         return subjectService.getAllSubject();
+    }
+
+    @GetMapping("/{id}")
+    public SubjectDTO getSubjetById(@PathVariable String id){
+        return subjectService.findSubjectById(id);
+    }
+    @GetMapping("/name/{name}")
+    public SubjectDTO getSubjetByName(@PathVariable String name){
+        return subjectService.findBySubjectName(name);
     }
 }

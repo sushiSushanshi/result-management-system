@@ -1,6 +1,7 @@
 package com.resultmanagementsystem.service;
 
 import com.resultmanagementsystem.dto.StudentDTO;
+import com.resultmanagementsystem.dto.SubjectDTO;
 import com.resultmanagementsystem.entity.Student;
 import com.resultmanagementsystem.entity.Subject;
 import com.resultmanagementsystem.repository.StudentRepository;
@@ -27,12 +28,17 @@ public class StudentService {
     private ModelMapper modelMapper;
 
     public StudentDTO createStudent(StudentDTO studentDTO){
-        List<Subject> subjectList = studentDTO.getSubjects().stream().map(s -> {
+        List<SubjectDTO> subjectDTOS = studentDTO.getSubjects().stream().map(s -> {
             String subjectId = subjectService.findBySubjectName(s).getId();
             return subjectService.findSubjectById(subjectId);
         }).collect(Collectors.toList());
         Student student = modelMapper.map(studentDTO, Student.class);
-        student.setSubjects(subjectList);
+        List<Subject> subjects = new ArrayList<>();
+        for (SubjectDTO subjectDTO : subjectDTOS){
+            Subject subject = modelMapper.map(subjectDTO, Subject.class);
+            subjects.add(subject);
+        }
+        student.setSubjects(subjects);
         studentRepository.save(student);
         return studentDTO;
     }
