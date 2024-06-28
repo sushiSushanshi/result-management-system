@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface MarksRepository extends JpaRepository<Marks, Long> {
-    List<Marks> findByStudentId(String studentRoll);
 }
