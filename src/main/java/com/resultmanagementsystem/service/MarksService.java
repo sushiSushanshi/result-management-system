@@ -49,4 +49,14 @@ public class MarksService {
         }
         return marksDTOList;
     }
+
+    public List<MarksDTO> findByStudent(String id){
+        List<Marks> marks = marksRepository.findByStudentId(id);
+        List<MarksDTO> marksDTOList = new ArrayList<>();
+        for(Marks mark : marks){
+            MarksDTO marksDTO = modelMapper.map(mark , MarksDTO.class);
+            marksDTOList.add(marksDTO);
+        }
+        return marksDTOList;
+    }
 }
